@@ -17,19 +17,4 @@ public class IssueRepository {
         return items;
     }
 
-    public Issue getById(int id) {
-        for (Issue item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public boolean addAll(Collection<? extends Issue> items) {
-        return this.items.addAll(items);
-    }
-
-
-
 }

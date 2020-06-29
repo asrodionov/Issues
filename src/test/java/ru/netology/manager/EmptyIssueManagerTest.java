@@ -1,6 +1,5 @@
 package ru.netology.manager;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +11,6 @@ import ru.netology.repository.IssueRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -29,8 +27,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.getOpenIssue();
+        int expected = 0;
+        int actual = manager.getOpenIssue().size();
 
         assertEquals(expected, actual);
     }
@@ -40,8 +38,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.getClosedIssue();
+        int expected = 0;
+        int actual = manager.getClosedIssue().size();
 
         assertEquals(expected, actual);
     }
@@ -51,8 +49,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.filterByAuthor("arodionov");
+        int expected = 0;
+        int actual = manager.filterByAuthor("arodionov").size();
 
         assertEquals(expected, actual);
     }
@@ -62,8 +60,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.filterByLabel("component: Jupiter");
+        int expected = 0;
+        int actual = manager.filterByLabel("component: Jupiter").size();
 
         assertEquals(expected, actual);
     }
@@ -73,8 +71,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.filterByAssignee("sormuras");
+        int expected = 0;
+        int actual = manager.filterByAssignee("sormuras").size();
 
         assertEquals(expected, actual);
     }
@@ -84,8 +82,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.filterByParticipant("marcphilipp");
+        int expected = 0;
+        int actual = manager.filterByParticipant("marcphilipp").size();
 
         assertEquals(expected, actual);
     }
@@ -95,8 +93,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.SortByAsc();
+        int expected = 0;
+        int actual = manager.sortByAsc().size();
 
         assertEquals(expected, actual);
     }
@@ -108,8 +106,8 @@ public class EmptyIssueManagerTest {
 
         IssueDescComparator comparator = new IssueDescComparator();
 
-        List<Issue> expected = new ArrayList<>();
-        List<Issue> actual = manager.SortByDesc(comparator);
+        int expected = 0;
+        int actual = manager.sortByDesc(comparator).size();
 
         assertEquals(expected, actual);
     }
@@ -119,8 +117,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = null;
-        List<Issue> actual = manager.OpeningIssue(2336);
+        Issue expected = null;
+        Issue actual = manager.openingIssue(2336);
 
         assertEquals(expected, actual);
     }
@@ -130,8 +128,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = null;
-        List<Issue> actual = manager.ClosedIssue(2336);
+        Issue expected = null;
+        Issue actual = manager.closedIssue(2336);
 
         assertEquals(expected, actual);
     }
@@ -141,8 +139,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = null;
-        List<Issue> actual = manager.OpeningIssue(2);
+        Issue expected = null;
+        Issue actual = manager.openingIssue(2);
 
         assertEquals(expected, actual);
     }
@@ -152,8 +150,8 @@ public class EmptyIssueManagerTest {
         List<Issue> returned = new ArrayList<>();
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = null;
-        List<Issue> actual = manager.ClosedIssue(1);
+        Issue expected = null;
+        Issue actual = manager.closedIssue(1);
 
         assertEquals(expected, actual);
     }

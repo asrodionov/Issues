@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,9 +14,9 @@ import java.util.Set;
 public class Issue implements Comparable<Issue>{
     private int id;
     private String name;
-    private String status;
+    private boolean isOpen;
     private String author;
-    private int openingDate;
+    public LocalDate openingDate = LocalDate.now();
     private String text;
     private Set<String> label = new HashSet<>();
     private Set<String> assignee = new HashSet<>();

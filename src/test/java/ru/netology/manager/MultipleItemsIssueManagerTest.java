@@ -10,6 +10,7 @@ import ru.netology.domain.Issue;
 import ru.netology.domain.IssueDescComparator;
 import ru.netology.repository.IssueRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +25,10 @@ public class MultipleItemsIssueManagerTest {
     @InjectMocks
     private IssueManager manager;
 
-    private Issue first = new Issue(2336, "Rename Alphanumeric Orderer to MethodName", "open", "gaganis", 15062020, "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sormuras","marcphilipp"),Set.of("arodionov","marcphilipp","sormuras"));
-    private Issue second = new Issue(2333, "Rename Alphanumeric Orderer to MethodName", "closed", "marcphilipp", 17062020, "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","3rd-party: Pioneer"),Set.of("sormuras","marcphilipp"),Set.of("marcphilipp","sormuras"));
-    private Issue third = new Issue(2334, "Rename Alphanumeric Orderer to MethodName", "open", "arodionov", 20062020, "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sbrannen"),Set.of("marcphilipp","sormuras"));
-    private Issue fourth = new Issue(2335, "Rename Alphanumeric Orderer to MethodName", "closed", "sormuras", 25062020, "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sormuras","marcphilipp"),Set.of("marcphilipp","sormuras"));
+    private Issue first = new Issue(2336, "Rename Alphanumeric Orderer to MethodName", true, "gaganis", LocalDate.of(2020,06,29), "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sormuras","marcphilipp"),Set.of("arodionov","marcphilipp","sormuras"));
+    private Issue second = new Issue(2333, "Rename Alphanumeric Orderer to MethodName", false, "marcphilipp", LocalDate.of(2020,06,18), "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","3rd-party: Pioneer"),Set.of("sormuras","marcphilipp"),Set.of("marcphilipp","sormuras"));
+    private Issue third = new Issue(2334, "Rename Alphanumeric Orderer to MethodName", true, "arodionov", LocalDate.of(2020,06,20), "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sbrannen"),Set.of("marcphilipp","sormuras"));
+    private Issue fourth = new Issue(2335, "Rename Alphanumeric Orderer to MethodName", false, "sormuras", LocalDate.of(2020,06,28), "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sormuras","marcphilipp"),Set.of("marcphilipp","sormuras"));
 
     @BeforeEach
     public void setUp() {
@@ -109,7 +110,7 @@ public class MultipleItemsIssueManagerTest {
         doReturn(returned).when(repository).getAll();
 
         List<Issue> expected = new ArrayList<>(List.of(second,third,fourth,first));
-        List<Issue> actual = manager.SortByAsc();
+        List<Issue> actual = manager.sortByAsc();
 
         assertEquals(expected, actual);
     }
@@ -122,7 +123,7 @@ public class MultipleItemsIssueManagerTest {
         IssueDescComparator comparator = new IssueDescComparator();
 
         List<Issue> expected = new ArrayList<>(List.of(first,fourth,third,second));
-        List<Issue> actual = manager.SortByDesc(comparator);
+        List<Issue> actual = manager.sortByDesc(comparator);
 
         assertEquals(expected, actual);
     }
@@ -132,8 +133,8 @@ public class MultipleItemsIssueManagerTest {
         List<Issue> returned = new ArrayList<>(List.of(first,second,third,fourth));
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>(List.of(new Issue(2333, "Rename Alphanumeric Orderer to MethodName", "open", "marcphilipp", 17062020, "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","3rd-party: Pioneer"),Set.of("sormuras","marcphilipp"),Set.of("marcphilipp","sormuras"))));
-        List<Issue> actual = manager.OpeningIssue(2333);
+        Issue expected = new Issue(2333, "Rename Alphanumeric Orderer to MethodName", true, "marcphilipp", LocalDate.of(2020,06,18), "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","3rd-party: Pioneer"),Set.of("sormuras","marcphilipp"),Set.of("marcphilipp","sormuras"));
+        Issue actual = manager.openingIssue(2333);
 
         assertEquals(expected, actual);
     }
@@ -143,8 +144,8 @@ public class MultipleItemsIssueManagerTest {
         List<Issue> returned = new ArrayList<>(List.of(first,second,third,fourth));
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = new ArrayList<>(List.of(new Issue(2336, "Rename Alphanumeric Orderer to MethodName", "closed", "gaganis", 15062020, "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sormuras","marcphilipp"),Set.of("arodionov","marcphilipp","sormuras"))));
-        List<Issue> actual = manager.ClosedIssue(2336);
+        Issue expected = new Issue(2336, "Rename Alphanumeric Orderer to MethodName", false, "gaganis", LocalDate.of(2020,06,29), "With the introduction of DisplayName orderer in 6fee44d, the name of the Alphanumeric orderer becomes ambiguous ie", Set.of("component: Jupiter","status: team discussion"),Set.of("sormuras","marcphilipp"),Set.of("arodionov","marcphilipp","sormuras"));
+        Issue actual = manager.closedIssue(2336);
 
         assertEquals(expected, actual);
     }
@@ -154,8 +155,8 @@ public class MultipleItemsIssueManagerTest {
         List<Issue> returned = new ArrayList<>(List.of(first,second,third,fourth));
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = null;
-        List<Issue> actual = manager.OpeningIssue(2);
+        Issue expected = null;
+        Issue actual = manager.openingIssue(2);
 
         assertEquals(expected, actual);
     }
@@ -165,8 +166,8 @@ public class MultipleItemsIssueManagerTest {
         List<Issue> returned = new ArrayList<>(List.of(first,second,third,fourth));
         doReturn(returned).when(repository).getAll();
 
-        List<Issue> expected = null;
-        List<Issue> actual = manager.ClosedIssue(1);
+        Issue expected = null;
+        Issue actual = manager.closedIssue(1);
 
         assertEquals(expected, actual);
     }

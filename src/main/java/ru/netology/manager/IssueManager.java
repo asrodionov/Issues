@@ -8,32 +8,34 @@ import java.util.*;
 
 public class IssueManager {
 
-    IssueRepository repository = new IssueRepository();
+    private IssueRepository repository;
+
+    public void IssueRepository(IssueRepository repository) {
+        this.repository = repository;
+    }
 
     public void add(Issue item) {
         repository.add(item);
     }
 
-    public List<Issue> getOpenIssue() {
+    private List<Issue> getIssueByStatus(boolean status) {
         List<Issue> result = new ArrayList<>();
 
         for (Issue issue : repository.getAll()) {
-            if (issue.getStatus() == "open") {
+            if (issue.isOpen() == status) {
                 result.add(issue);
             }
         }
         return result;
     }
 
-    public List<Issue> getClosedIssue() {
-        List<Issue> result = new ArrayList<>();
 
-        for (Issue issue : repository.getAll()) {
-            if (issue.getStatus() == "closed") {
-                result.add(issue);
-            }
-        }
-        return result;
+    public List<Issue> getOpenIssue() {
+        return getIssueByStatus(true);
+    }
+
+    public List<Issue> getClosedIssue() {
+        return getIssueByStatus(false);
     }
 
     public List<Issue> filterByAuthor(String author) {
@@ -80,49 +82,39 @@ public class IssueManager {
         return result;
     }
 
-    public List<Issue> SortByAsc() {
-        List<Issue> result = new ArrayList<>();
+    public List<Issue> sortByAsc() {
+        List<Issue> result = repository.getAll();
 
-        for (Issue issue : repository.getAll()) {
-            result.add(issue);
-        }
         result.sort(null);
         return result;
     }
 
-    public List<Issue> SortByDesc(Comparator<Issue> comparator) {
-        List<Issue> result = new ArrayList<>();
+    public List<Issue> sortByDesc(Comparator<Issue> comparator) {
+        List<Issue> result = repository.getAll();
 
-        for (Issue issue : repository.getAll()) {
-            result.add(issue);
-        }
         result.sort(comparator);
         return result;
     }
 
-    public List<Issue> OpeningIssue(int id) {
-        List<Issue> result = new ArrayList<>();
-
+    public Issue openingIssue(int id) {
         for (Issue issue : repository.getAll()) {
-            if (issue.getId() == id && issue.getStatus() == "closed") {
-                result.add(issue);
-                result.get(0).setStatus("open");
-                return result;
+            if (issue.getId() == id && !issue.isOpen()) {
+                issue.setOpen(true);
+                return  issue;
             }
         }
         return null;
     }
 
-    public List<Issue> ClosedIssue(int id) {
-        List<Issue> result = new ArrayList<>();
-
+    public Issue closedIssue(int id) {
         for (Issue issue : repository.getAll()) {
-            if (issue.getId() == id && issue.getStatus() == "open") {
-                result.add(issue);
-                result.get(0).setStatus("closed");
-                return result;
+            if (issue.getId() == id && issue.isOpen()) {
+                issue.setOpen(false);
+                return issue;
             }
         }
         return null;
     }
+
+
 }
