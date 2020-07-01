@@ -10,9 +10,7 @@ public class IssueManager {
 
     private IssueRepository repository;
 
-    public void IssueRepository(IssueRepository repository) {
-        this.repository = repository;
-    }
+    public IssueManager() {}
 
     public void add(Issue item) {
         repository.add(item);
